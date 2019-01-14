@@ -2,7 +2,7 @@
 
 Clean up your old tweets with a helpful, keyboard-controlled UI.
 
-![Screenshot of CleanBird](/Screenshot.png)
+![Screenshot of CleanBird](/Assets/Screenshot.png)
 
 ## Setting up
 
