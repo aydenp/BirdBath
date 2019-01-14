@@ -1,0 +1,25 @@
+{
+  "name": "CleanBird",
+  "version": "1.0.0",
+  "description": "Clean out your old tweets",
+  "main": "./src/index.html",
+  "repository": "https://www.github.com/aydenp/CleanBird.git",
+  "author": "Ayden Panhuyzen",
+  "license": "MIT",
+  "scripts": {
+    "preinstall": "npm i -g parcel-bundler",
+    "serve": "mkdir -p dist && cp -R data dist/ && parcel serve --no-cache -p 8080 src/index.html"
+  },
+  "devDependencies": {
+    "@vue/component-compiler-utils": "^2.5.0",
+    "sass": "^1.16.0",
+    "typescript": "^3.2.2",
+    "vue-template-compiler": "^2.5.22"
+  },
+  "dependencies": {
+    "moment": "^2.23.0",
+    "vue": ">=1.x.x",
+    "vue-hot-reload-api": "^2.3.1",
+    "vue-property-decorator": "^7.3.0"
+  }
+}
