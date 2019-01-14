@@ -2,8 +2,6 @@
 
 Clean up your old tweets with a helpful, keyboard-controlled UI.
 
-**NOTE:** The main functionality of this project, actually going through with the deletion, isn't done yet.
-
 ![Screenshot of CleanBird](/Screenshot.png)
 
 ## Setting up
