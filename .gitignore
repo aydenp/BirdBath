@@ -1,6 +1,8 @@
 # -- Project-specific --
 dist/
+build/
 data/
+src/Config.js
 
 # -- Node --
 

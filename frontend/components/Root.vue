@@ -2,6 +2,9 @@
     <div id="app">
         <transition name="fade">
             <archive-viewer v-if="dataManager.isLoaded"></archive-viewer>
+            <div class="loading" v-else>
+                <i class="fas fa-spinner fa-spin fa-fw"></i>
+            </div>
         </transition>
     </div>
 </template>

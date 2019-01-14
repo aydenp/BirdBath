@@ -232,6 +232,10 @@ body {
     @include hot-button-style(#FF304E);
     background: rgba(255, 0, 0, 0.05);
 
+    &.disabled {
+        pointer-events: none;
+    }
+
     &:hover {
         color: #fff;
     }
@@ -278,4 +282,12 @@ body {
 
 .fade-enter, .fade-leave-to {
     opacity: 0;
+}
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
 }

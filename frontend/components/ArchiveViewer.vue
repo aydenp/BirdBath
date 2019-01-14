@@ -13,28 +13,32 @@
                 <span class="subtitle">@{{ dataManager.userDetails.screen_name }}</span>
             </div>
         </div>
-        <div class="tweet-ctn">
-            <div v-if="currentTweet">
-                <tweet :tweet="currentTweet" ref="currentTweet"></tweet>
-                <div class='actions'>
-                    <a @click="deleteTweet" class="delete" href="javascript:void(0)" title="Delete (X)">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                    <a @click="advanceToNextTweet" href="javascript:void(0)" title="Next (N)">
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div v-else>No Tweets to Delete</div>
-        </div>
         <transition name="fade">
-            <div class="delete-popper" v-if="toDelete.length > 0">
+            <div class="tweet-ctn" v-if="!isDeleting">
+                <div v-if="currentTweet">
+                    <tweet :tweet="currentTweet" ref="currentTweet"></tweet>
+                    <div class='actions'>
+                        <a @click="deleteTweet" class="delete" href="javascript:void(0)" title="Delete (X)">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        <a @click="advanceToNextTweet" href="javascript:void(0)" title="Next (N)">
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div v-else>No Tweets to Delete</div>
+            </div>
+        </transition>
+        <transition name="fade">
+            <div :class="{ 'delete-popper': true, disabled: isDeleting }" v-if="toDelete.size > 0" @click="deleteClicked">
                 <i class="fas fa-trash fa-fw"></i>
                 <div class="text">
-                    <span class="title">{{ toDelete.length.toLocaleString() }} Tweet{{ toDelete.length == 1 ? "" : "s" }}</span>
-                    <span class="subtitle">to delete</span>
+                    <span class="title">{{ toDelete.size.toLocaleString() }} Tweet{{ toDelete.size == 1 ? "" : "s" }}</span>
+                    <span class="subtitle" v-if="isDeleting">{{ toDelete.size == 1 ? "is" : "are" }} being deleted</span>
+                    <span class="subtitle" v-else>to delete</span>
                 </div>
-                <i class="chevron fas fa-chevron-right fa-fw"></i>
+                <i class="chevron fas fa-spinner fa-spin fa-fw" v-if="isDeleting"></i>
+                <i class="chevron fas fa-chevron-right fa-fw" v-else></i>
             </div>
         </transition>
     </main>
@@ -45,6 +49,7 @@ import { Vue, Component } from "vue-property-decorator";
 import ProgressBar from "./ProgressBar.vue"
 import Tweet from "./Tweet.vue"
 import { DataManager } from "../util/DataManager";
+import { TwitterAPI } from "../util/TwitterAPI";
 
 @Component({
     components: { ProgressBar, Tweet }
@@ -52,7 +57,8 @@ import { DataManager } from "../util/DataManager";
 export default class ArchiveViewer extends Vue {
     dataManager = DataManager;
     index = 0;
-    toDelete: string[] = [];
+    toDelete = new Set<string>();
+    isDeleting = false;
 
     created() {
         window.addEventListener("keydown", this.handleKeyDown);
@@ -88,12 +94,22 @@ export default class ArchiveViewer extends Vue {
     }
 
     deleteTweet() {
-        this.toDelete.push(this.currentTweet.id);
+        this.toDelete.add(this.currentTweet.id_str);
         this.index++;
     }
 
     advanceToNextTweet() {
         this.index++;
+    }
+
+    async deleteClicked() {
+        if (this.isDeleting || !window.confirm("Are you sure you want to delete these tweets? This cannot be undone.")) return;
+        this.isDeleting = true;
+        for (const id of this.toDelete) {
+            if (await TwitterAPI.deleteTweet(id)) this.toDelete.delete(id);
+        }
+        if (this.toDelete.size > 0) window.alert("Some items could not be deleted. They have remained in the queue.");
+        this.isDeleting = false;
     }
 }
 </script>

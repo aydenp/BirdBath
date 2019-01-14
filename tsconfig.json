@@ -13,7 +13,8 @@
         "lib": ["es2015", "dom"],
         "typeRoots": ["node_modules/@types"],
         "experimentalDecorators": true,
-        "strictPropertyInitialization": false
+        "strictPropertyInitialization": false,
+        "outDir": "build/"
     },
     "include": [
         "./src/**/*"

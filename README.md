@@ -11,9 +11,12 @@ Clean up your old tweets with a helpful, keyboard-controlled UI.
 1. Clone this repository.
 2. Type `npm i` to install the required dependencies.
 3. [Request a Twitter archive.](https://twitter.com/settings/account)
-4. Download your Twitter archive, and copy the `data` folder from it into the project root.
-5. Start the development server with `npm run serve`.
-6. Navigate to the [local site](http://localhost:8080/) and get started deleting.
+4. [Create a Twitter application for this app](https://developer.twitter.com/en/apps/create). Just specify the name, description, and use.
+5. Obtain your access token/secret and API key/secret.
+6. Copy `src/Config.example.js` to `src/Config.js` and fill in the fields.
+7. Download your Twitter archive, and copy the `data` folder from it into the project root.
+8. Start the development server with `npm run serve`.
+9. Navigate to the [local site](http://localhost:8080/) and get started deleting.
 
 ## Using it
 

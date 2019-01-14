@@ -1,0 +1,10 @@
+{
+    "presets": [
+        ["env", {
+            "targets": {
+                "browsers": ["last 1 Chrome version"]
+            }
+        }]
+    ],
+    "plugins": ["babel-plugin-transform-class-properties"]
+}
