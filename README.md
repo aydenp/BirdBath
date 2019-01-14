@@ -2,6 +2,8 @@
 
 Clean up your old tweets with a helpful, keyboard-controlled UI.
 
+**NOTE:** The main functionality of this project, actually going through with the deletion, isn't done yet.
+
 ![Screenshot of CleanBird](/Screenshot.png)
 
 ## Setting up
@@ -12,6 +14,12 @@ Clean up your old tweets with a helpful, keyboard-controlled UI.
 4. Download your Twitter archive, and copy the `data` folder from it into the project root.
 5. Start the development server with `npm run serve`.
 6. Navigate to the [local site](http://localhost:8080/) and get started deleting.
+
+## Using it
+
+You'll cycle through all of your tweets. You can either choose to trash a tweet (shortcut: X) or move on to the next one (shortcut: N).
+
+Once you're done, click on the count of tweets queued to be deleted at the bottom. You'll be guided through the actual deletion.
 
 ## Contributing
 
