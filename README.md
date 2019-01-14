@@ -2,6 +2,8 @@
 
 Clean up your old tweets with a helpful, keyboard-controlled UI.
 
+![Screenshot of CleanBird](/Screenshot.png)
+
 ## Setting up
 
 1. Clone this repository.
