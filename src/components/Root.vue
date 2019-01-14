@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <archive-viewer v-if="dataManager.isLoaded"></archive-viewer>
+        <transition name="fade">
+            <archive-viewer v-if="dataManager.isLoaded"></archive-viewer>
+        </transition>
     </div>
 </template>
 
