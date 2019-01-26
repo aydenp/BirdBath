@@ -1,6 +1,7 @@
 module.exports = {
-    consumer_key: "api key",
-    consumer_secret: "api secret",
-    access_token_key: "token",
-    access_token_secret: "token secret"
+    consumerKey: "api key",
+    consumerSecret: "api secret",
+    publicURL: "http://127.0.0.1:8080",
+    port: 8080,
+    cookieSecret: "change this"
 }

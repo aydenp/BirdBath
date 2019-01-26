@@ -1,1 +1,1 @@
-export const TWITTER_BASE = "https://www.twitter.com";
+export const TWITTER_BASE = "https://twitter.com";

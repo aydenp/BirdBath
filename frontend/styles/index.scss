@@ -1,6 +1,7 @@
 @import url(./normalize.css);
 
 $backgroundColour: #15202b;
+$linkColour: #007aff;
 
 * {
     user-select: none;
@@ -24,6 +25,11 @@ body {
     }
 }
 
+a:link, a:visited {
+    color: $linkColour;
+    text-decoration: none;
+}
+
 @mixin hot-button-style($accentColour) {
     border: 1px solid $accentColour;
     color: $accentColour;
@@ -43,7 +49,8 @@ body {
     background: rgba(255, 255, 255, 0.05);
     padding: 8px;
     display: flex;
-    
+    align-items: center;
+
     > .item {
         font-size: 16px;
         display: block;
@@ -66,6 +73,10 @@ body {
             font-size: 12px;
             margin-top: 2px;
             color: rgba(255, 255, 255, 0.3);
+        }
+
+        a {
+            font-size: 11px;
         }
     }
 
@@ -120,7 +131,6 @@ body {
 
                 > a {
                     display: flex;
-                    text-decoration: none;
                     align-items: center;
 
                     > img {
@@ -182,11 +192,6 @@ body {
                     clear: both;
                 }
             }
-
-            .link {
-                color: #007AFF;
-                text-decoration: none;
-            }
         }
 
         .actions {
@@ -203,8 +208,7 @@ body {
                 border-radius: 50%;
                 font-size: 24px;
                 margin-right: 24px;
-                text-decoration: none;
-                @include hot-button-style(#007aff);
+                @include hot-button-style($linkColour);
 
                 &:last-child {
                     margin-right: 0;
@@ -290,4 +294,58 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20px;
+}
+
+.setup-task {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div {
+        box-sizing: border-box;
+        padding: 32px 24px;
+        max-width: 400px;
+        background: #222a34;
+        border-radius: 4px;
+        
+        @media(max-width: 400px) {
+            border-radius: 0;
+        }
+        
+        @media(max-height: 600px) {
+            background: none;
+        }
+
+        h1 {
+            font-weight: 600;
+            margin: 0;
+        }
+    
+        p {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+    
+        a {
+            margin-top: 8px;
+            display: inline-block;
+        }
+    }
+}
+
+.btn {
+    @include hot-button-style($linkColour);
+    padding: 8px 16px;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 18px;
+}
+
+.key-tip {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 16px;
 }

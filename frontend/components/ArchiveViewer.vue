@@ -11,6 +11,7 @@
             <div class="item right">
                 <span class="name">{{ dataManager.userDetails.full_name }}</span>
                 <span class="subtitle">@{{ dataManager.userDetails.screen_name }}</span>
+                <a href="/auth/sign-out">Sign out</a>
             </div>
         </div>
         <transition name="fade">
@@ -25,6 +26,7 @@
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
+                    <div class="key-tip" v-if="!hasUsedKeys && index < 5"><strong>Tip:</strong> Type <strong>X</strong> to quickly queue a tweet for deletion, and <strong>N</strong> to advance to the next tweet.</div>
                 </div>
                 <div v-else>No Tweets to Delete</div>
             </div>
@@ -59,6 +61,7 @@ export default class ArchiveViewer extends Vue {
     index = 0;
     toDelete = new Set<string>();
     isDeleting = false;
+    hasUsedKeys = false;
 
     created() {
         window.addEventListener("keydown", this.handleKeyDown);
@@ -75,15 +78,18 @@ export default class ArchiveViewer extends Vue {
         case 39: // Right arrow
         case 40: // Down arrow
         case 13: // Enter
+            this.hasUsedKeys = true;
             this.advanceToNextTweet();
             break;
         case 88: // X
         case 68: // D
         case 46: // Delete
         case 8: // Backspace
+            this.hasUsedKeys = true;
             this.deleteTweet();
             break;
         case 79: // O
+            this.hasUsedKeys = true;
             this.$refs.currentTweet.openInTwitter();
             break;
         }
