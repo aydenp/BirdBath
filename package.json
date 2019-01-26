@@ -10,7 +10,9 @@
     "preinstall": "npm i -g parcel-bundler",
     "serve": "parcel build --no-cache frontend/index.html && node src/server.js",
     "client-dev": "parcel watch --no-cache frontend/index.html",
-    "server-start": "node src/server.js"
+    "server-start": "node src/server.js",
+    "server-prod": "NODE_ENV=production node src/server.js",
+    "client-prod": "NODE_ENV=production parcel build --no-cache --no-source-maps frontend/index.html"
   },
   "devDependencies": {
     "@vue/component-compiler-utils": "^2.5.0",

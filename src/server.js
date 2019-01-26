@@ -62,4 +62,4 @@ app.use(express.static(path.join(__dirname, "..", "dist")));
 
 // - Start Server
 
-app.listen(Config.port, "127.0.0.1", () => console.log(`Available at http://localhost:${Config.port}!`));
+app.listen(Config.port, () => console.log(`Available at http://localhost:${Config.port}!`));
