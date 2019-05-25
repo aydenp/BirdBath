@@ -1,14 +1,14 @@
-![CleanBird](/Assets/Logo.png)
+# BirdBath
 
-Clean up your old tweets with a helpful, keyboard-controlled UI.
+Wash away your old tweets with a helpful, keyboard-controlled UI.
 
-[CleanBird is available here](https://cleanbird.madebyayden.co/).
+[BirdBath is available here](https://birdbath.ayden.dev/).
 
-![Screenshot of CleanBird](/Assets/Screenshot.png)
+![Screenshot of BirdBath](/Assets/Screenshot.png)
 
 ## Setting up
 
-**Just want to quickly delete your tweets?** Use the pre-hosted version [here](https://cleanbird.madebyayden.co/).
+**Just want to quickly delete your tweets?** Use the pre-hosted version [here](https://birdbath.ayden.dev/).
 
 1. Clone this repository.
 2. Type `npm i` to install the required dependencies.
@@ -29,7 +29,7 @@ Once you're done, click on the count of tweets queued to be deleted at the botto
 
 ## Contributing
 
-Feel free to contribute to the source code of CleanBird to make it something even better! Just try to adhere to the general coding style throughout, to make it as readable as possible.
+Feel free to contribute to the source code of BirdBath to make it something even better! Just try to adhere to the general coding style throughout, to make it as readable as possible.
 
 ## License
 
