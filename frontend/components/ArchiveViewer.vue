@@ -19,6 +19,9 @@
                 <div v-if="currentTweet">
                     <tweet :tweet="currentTweet" ref="currentTweet"></tweet>
                     <div class='actions'>
+                        <a @click="returnToPreviousTweet" href="javascript:void(0)" title="Previous (Z)" v-if="index > 0">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
                         <a @click="deleteTweet" class="delete" href="javascript:void(0)" title="Delete (X)">
                             <i class="fas fa-trash"></i>
                         </a>
@@ -32,11 +35,11 @@
             </div>
         </transition>
         <transition name="fade">
-            <div :class="{ 'delete-popper': true, disabled: isDeleting }" v-if="toDelete.size > 0" @click="deleteClicked">
+            <div :class="{ 'delete-popper': true, disabled: isDeleting }" v-if="queueSize > 0" @click="deleteClicked">
                 <i class="fas fa-trash fa-fw"></i>
                 <div class="text">
-                    <span class="title">{{ toDelete.size.toLocaleString() }} Tweet{{ toDelete.size == 1 ? "" : "s" }}</span>
-                    <span class="subtitle" v-if="isDeleting">{{ toDelete.size == 1 ? "is" : "are" }} being deleted</span>
+                    <span class="title">{{ queueSize.toLocaleString() }} Tweet{{ queueSize == 1 ? "" : "s" }}</span>
+                    <span class="subtitle" v-if="isDeleting">{{ queueSize == 1 ? "is" : "are" }} being deleted</span>
                     <span class="subtitle" v-else>to delete</span>
                 </div>
                 <i class="chevron fas fa-spinner fa-spin fa-fw" v-if="isDeleting"></i>
@@ -47,11 +50,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import ProgressBar from "./ProgressBar.vue"
 import Tweet from "./Tweet.vue"
 import { DataManager } from "../util/DataManager";
 import { TwitterAPI } from "../util/TwitterAPI";
+import { AppState } from "../stores";
 
 @Component({
     components: { ProgressBar, Tweet }
@@ -59,16 +63,27 @@ import { TwitterAPI } from "../util/TwitterAPI";
 export default class ArchiveViewer extends Vue {
     dataManager = DataManager;
     index = 0;
-    toDelete = new Set<string>();
     isDeleting = false;
     hasUsedKeys = false;
 
     created() {
         window.addEventListener("keydown", this.handleKeyDown);
+        AppState.dispatch("setupWithAccount", DataManager.userDetails);
+        const restoreTweetID = AppState.getters.lastLoadedTweetID;
+        if (restoreTweetID) {
+            const index = DataManager.tweets.findIndex((t) => t.id_str == restoreTweetID);
+            if (index >= 0) this.index = index;
+        }
     }
 
     beforeDestroy() {
         window.removeEventListener("keydown", this.handleKeyDown);
+    }
+
+    @Watch("index")
+    onTweetChange() {
+        AppState.commit("recordView", this.currentTweet.id_str);
+        console.log(this.currentTweet);
     }
 
     handleKeyDown(e: KeyboardEvent) {
@@ -88,6 +103,12 @@ export default class ArchiveViewer extends Vue {
             this.hasUsedKeys = true;
             this.deleteTweet();
             break;
+        case 90: // Z
+        case 37: // Left arrow
+        case 38: // Up arrow
+            this.hasUsedKeys = true;
+            this.returnToPreviousTweet();
+            break;
         case 79: // O
             this.hasUsedKeys = true;
             this.$refs.currentTweet.openInTwitter();
@@ -100,7 +121,7 @@ export default class ArchiveViewer extends Vue {
     }
 
     deleteTweet() {
-        this.toDelete.add(this.currentTweet.id_str);
+        AppState.commit("queue", this.currentTweet.id_str);
         this.index++;
     }
 
@@ -108,14 +129,24 @@ export default class ArchiveViewer extends Vue {
         this.index++;
     }
 
+    returnToPreviousTweet() {
+        if (this.index <= 0) return;
+        this.index--;
+        AppState.commit("dequeue", this.currentTweet.id_str);
+    }
+
     async deleteClicked() {
         if (this.isDeleting || !window.confirm("Are you sure you want to delete these tweets? This cannot be undone.")) return;
         this.isDeleting = true;
-        for (const id of this.toDelete) {
-            if (await TwitterAPI.deleteTweet(id)) this.toDelete.delete(id);
+        for (const id of AppState.getters.deletionQueue) {
+            if (await TwitterAPI.deleteTweet(id)) AppState.commit("dequeue", id);
         }
-        if (this.toDelete.size > 0) window.alert("Some items could not be deleted. They have remained in the queue.");
+        if (this.queueSize > 0) window.alert("Some items could not be deleted. They remain in the queue.");
         this.isDeleting = false;
+    }
+
+    get queueSize() {
+        return AppState.getters.deletionQueueCount;
     }
 }
 </script>

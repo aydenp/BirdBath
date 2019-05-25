@@ -1,9 +1,9 @@
 {
-  "name": "CleanBird",
+  "name": "birdbath",
   "version": "1.0.0",
-  "description": "Clean out your old tweets",
+  "description": "Wash away your old tweets",
   "main": "./src/index.html",
-  "repository": "https://www.github.com/aydenp/CleanBird.git",
+  "repository": "https://www.github.com/aydenp/BirdBath.git",
   "author": "Ayden Panhuyzen",
   "license": "MIT",
   "scripts": {
@@ -38,6 +38,8 @@
     "twitter": "^1.7.1",
     "vue": ">=1.x.x",
     "vue-hot-reload-api": "^2.3.1",
-    "vue-property-decorator": "^7.3.0"
+    "vue-property-decorator": "^7.3.0",
+    "vuex": "^3.1.1",
+    "vuex-persist": "^2.0.1"
   }
 }

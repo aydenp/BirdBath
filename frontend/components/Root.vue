@@ -6,13 +6,13 @@
             </div>
             <div class="container setup-task" v-else-if="!isSignedIn"><div>
                 <h1>Get started</h1>
-                <p>CleanBird helps you review and clean up your old tweets. Sign in to your Twitter account to get started.</p>
+                <p>BirdBath helps you review and clean up your old tweets. Sign in to your Twitter account to get started.</p>
                 <a href="/auth/twitter" class="btn"><i class="fab fa-twitter fa-fw"></i> Sign in with Twitter</a>
             </div></div>
             <div class="container setup-task" v-else-if="!dataManager.hasStarted"><div>
                 <h1>Your archive</h1>
                 <p>
-                    CleanBird works by sifting through the tweets in a Tweet archive, which contains everything you've tweeted.<br>
+                    BirdBath works by sifting through the tweets in a Tweet archive, which contains everything you've tweeted.<br>
                     Don't have one? <a href="https://twitter.com/settings/account" target="_blank">Download one from Twitter here</a> by choosing <em>Your Tweet Archive: Request your archive</em>.<br>
                     <strong>Note:</strong> This is different from a Twitter archive, which contains all of your account data. A Tweet archive simply contains everything you've tweeted.<br><br>
                     <small>This file will be opened and scanned in your browser. It is never uploaded to any server.</small>
@@ -70,7 +70,7 @@ export default class Root extends Vue {
             reader.readAsArrayBuffer(input.files[0]);
             reader.onloadend = () => this.loadArchive(reader.result);
         } else {
-            window.alert("The provided file was not a ZIP archive. CleanBird only works with Tweet archives.")
+            window.alert("The provided file was not a ZIP archive. BirdBath only works with Tweet archives.")
         }
         input.value = input.defaultValue;
     }

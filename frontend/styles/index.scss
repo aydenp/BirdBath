@@ -156,6 +156,26 @@ a:link, a:visited {
                 }
             }
 
+            .media {
+                margin-top: 20px;
+                display: flex;
+
+                > a {
+                    margin-right: 8px;
+                    
+                    > img {
+                        min-width: 50px;
+                        max-width: 150px;
+                        height: 150px;
+                        border-radius: 8px;
+                    }
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+
             .text {
                 font-size: 36px;
                 user-select: initial;
