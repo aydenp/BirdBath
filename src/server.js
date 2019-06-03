@@ -39,7 +39,8 @@ app.delete("/tweets/:id", (req, res) => {
         access_token_key: req.user.token,
         access_token_secret: req.user.tokenSecret
     });
-    client.post('statuses/destroy/' + req.params.id, (error, tweets, response) => {
+    client.post('statuses/destroy/' + req.params.id, (errors, tweets, response) => {
+        const error = errors ? errors.filter(e => e.code != 144).length > 0 : false;
         if (error) console.error("Could not delete tweet:", error);
         res.json({ success: !error });
     });
