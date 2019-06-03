@@ -139,7 +139,11 @@ export default class ArchiveViewer extends Vue {
         if (this.isDeleting || !window.confirm("Are you sure you want to delete these tweets? This cannot be undone.")) return;
         this.isDeleting = true;
         for (const id of AppState.getters.deletionQueue) {
-            if (await TwitterAPI.deleteTweet(id)) AppState.commit("dequeue", id);
+            try {
+                if (await TwitterAPI.deleteTweet(id)) AppState.commit("dequeue", id);
+            } catch (e) {
+                console.error("Could not delete tweet!", e);
+            }
         }
         if (this.queueSize > 0) window.alert("Some items could not be deleted. They remain in the queue.");
         this.isDeleting = false;
