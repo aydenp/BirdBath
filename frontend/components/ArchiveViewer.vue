@@ -138,7 +138,7 @@ export default class ArchiveViewer extends Vue {
     async deleteClicked() {
         if (this.isDeleting || !window.confirm("Are you sure you want to delete these tweets? This cannot be undone.")) return;
         this.isDeleting = true;
-        for (const id of AppState.getters.deletionQueue) {
+        for (const id of AppState.getters.deletionQueue.slice()) {
             try {
                 if (await TwitterAPI.deleteTweet(id)) AppState.commit("dequeue", id);
             } catch (e) {
